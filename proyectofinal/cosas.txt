@@ -1,0 +1,14 @@
+Esto esta aqui para ayudarme en un futuro a crear la sidebar que necesito para las opciones del usuario
+
+npm i react-pro-sidebar
+
+<Sidebar>
+  <Menu>
+    <SubMenu label="Charts">
+      <MenuItem> Pie charts </MenuItem>
+      <MenuItem> Line charts </MenuItem>
+    </SubMenu>
+    <MenuItem> Documentation </MenuItem>
+    <MenuItem> Calendar </MenuItem>
+  </Menu>
+</Sidebar>

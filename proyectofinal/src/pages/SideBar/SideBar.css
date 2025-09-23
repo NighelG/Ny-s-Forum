@@ -1,0 +1,78 @@
+
+/* .toggle-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1100;
+} */
+
+.sidebar-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: auto;
+  background: rgb(140, 139, 139);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 999;
+  
+}
+
+.sidebar-container.open {
+  transform: translateX(0);
+}
+
+.sidebar {
+  width: 400px;
+  height: 100vh;
+  background: #858585;
+  position: absolute;
+  right: 0;
+  top: 0;
+  overflow-y: auto;
+}
+.usuarioInfo {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  grid-template-rows: auto auto auto auto auto;
+  grid-gap: 10px;
+  align-items: center;
+}
+
+.usuarioInfo .pfp {
+  grid-row: 1 / 4;
+  grid-column: 1;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  
+  object-fit: cover;
+}
+
+.usuarioInfo .username {
+  grid-column: 2;
+  grid-row: 1;
+  font-weight: bold;
+}
+
+.usuarioInfo .id {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.usuarioInfo .email {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.usuarioInfo .description {
+  grid-column: 1 / 3;
+  grid-row: 4;
+}
+
+.usuarioInfo .cambiarPfp {
+  grid-column: 1 / 3;
+  grid-row: 5;
+  justify-self: start;
+}

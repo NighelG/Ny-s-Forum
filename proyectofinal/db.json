@@ -1,0 +1,30 @@
+{
+  "users": [
+    {
+      "id": "8b5d",
+      "userName": "Nighel",
+      "email": "correofalso@gmail.com",
+      "password": "123holamundo",
+      "profileIcon": "https://art.ngfiles.com/thumbnails/2904000/2904834_full.webp?f1670263896",
+      "description": "Hola, soy homero chino"
+    },
+    {
+      "id": "065f",
+      "userName": "Goku",
+      "email": "esfera4estrellas@gmail.com",
+      "password": "12345678",
+      "profileIcon": "https://i.redd.it/fbbefuld1lo31.jpg",
+      "description": ""
+    },
+    {
+      "id": "cc43",
+      "userName": "Pedrito",
+      "email": "pedrito@gmail.com",
+      "password": "1234567",
+      "profileIcon": "https://preview.redd.it/the-only-ai-generated-image-that-is-art-v0-sfbmi1ly3nsc1.jpeg?width=640&crop=smart&auto=webp&s=c2a38432ef7bc898df753d82bffa499df8b0db11",
+      "description": ""
+    }
+  ],
+  "posts": [],
+  "comments": []
+}
