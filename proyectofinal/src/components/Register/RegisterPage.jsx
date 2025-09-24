@@ -27,10 +27,9 @@ function RegisterPage() {
       profileIcon:"",
       description:""
     }
-
     try{
       await UserServices.postUser(newUser)
-      navigate('/LoginPage')
+      navigate('/')
     } catch (error) {
       setErrorMsg("Error al registrar el usuario")
     }
@@ -44,7 +43,7 @@ function RegisterPage() {
       <br /><br />
 
       <label >
-        <input type="text" placeholder='Nombre del Usuario' value={user} onChange={(e) => setUser(e.target.value)}/>
+        <input type="text" placeholder='Nombre del Usuario' minLength={"3"} maxLength={"20"} value={user} onChange={(e) => setUser(e.target.value)}/>
       </label>
       <br /><br />
 
@@ -54,7 +53,7 @@ function RegisterPage() {
       <br /><br />
 
       <label >
-        <input type="password" placeholder='Contraseña' value={password} onChange={(e) => setPassword(e.target.value)} />
+        <input type="password" placeholder='Contraseña' minLength={"8"} maxLength={"15"} value={password} onChange={(e) => setPassword(e.target.value)} />
       </label>
         <br /><br />
 

@@ -6,7 +6,7 @@
       "email": "correofalso@gmail.com",
       "password": "123holamundo",
       "profileIcon": "https://art.ngfiles.com/thumbnails/2904000/2904834_full.webp?f1670263896",
-      "description": "Hola, soy homero chino"
+      "description": "Hola, me gusta el cafe y las tortugas"
     },
     {
       "id": "065f",
@@ -22,6 +22,14 @@
       "email": "pedrito@gmail.com",
       "password": "1234567",
       "profileIcon": "https://preview.redd.it/the-only-ai-generated-image-that-is-art-v0-sfbmi1ly3nsc1.jpeg?width=640&crop=smart&auto=webp&s=c2a38432ef7bc898df753d82bffa499df8b0db11",
+      "description": ""
+    },
+    {
+      "id": "d7cd",
+      "userName": "Douglas",
+      "email": "douglasnighel@gmail.com",
+      "password": "123456789",
+      "profileIcon": "",
       "description": ""
     }
   ],

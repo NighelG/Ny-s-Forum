@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react"
+import { Await, Link, useNavigate } from 'react-router-dom'
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar"
 import './SideBar.css'
 
 import UserServices from '../../services/UserServices'
 
 function SideBar() {
+    const navigate = useNavigate()
     /* Const de la sidebar */
     const [isOpen, setIsOpen] = useState(true)
     const [userData, setUserData] = useState(null)
@@ -35,7 +37,7 @@ function SideBar() {
             return
         }
         const uptadeUser = await UserServices.patchUser(userData.id, actualizacion)
-        window.location.reload()
+        window.location.reload();
     }
     /* Patch de datos del usuario */
     async function updateData() {
@@ -49,6 +51,11 @@ function SideBar() {
         const uptadeData = await UserServices.patchUser(userData.id, update)
         window.location.reload()
     }
+    /* Boton de cerrar sesion */
+        function logOut(){
+            localStorage.removeItem('logueado')
+            navigate('/')
+        }
     
   return (
     <div>
@@ -61,12 +68,14 @@ function SideBar() {
                                 <img className="pfp" src={userData.profileIcon || "/img/defaultPFP.jpg"} alt="pfp" />
                                 <p className="username">{userData.userName}</p>
                                 <p className="id">id: #{userData.id}</p>
-                                <p className="email">correo:{userData.email}</p>
                                 <p className="description">{userData.description || "Sin descripcion"}</p>
+                                <p className="email">correo:{userData.email}</p>
                             </div>
                         ):(
                             <p>Eu, no deberias de estar aqui sin haberte logueado</p>
                         )}
+                        <button onClick={logOut}>Cerrar sesion</button>
+                        <br /><br />
                     </SubMenu>
                     <SubMenu label="Personalización">
                         <div>
@@ -80,19 +89,16 @@ function SideBar() {
                                 <button onClick={updateUser}><img className="tinyIcon" src="/img/penciledit.png" alt="" /></button>
                             </label>
                             <br /><br />
-                            {/* <button className="toggle-btn" onClick={() => setIsOpen(!isOpen)}>
-                                {isOpen ? "Cerrar menú" : "Abrir menú"}
-                            </button> */}
                         </div>
                     </SubMenu>
                     <SubMenu label="Ajustes de la cuenta">
                             <div>
                                 <h4>Modificar datos del usuario</h4>
-                                <input type="text" placeholder="Nuevo nombre de usuario" value={newName} onChange={(e) => setNewName(e.target.value)} />
+                                <input type="text" minLength={"3"} maxLength={"20"} placeholder="Nuevo nombre de usuario" value={newName} onChange={(e) => setNewName(e.target.value)} />
                                 <br /><br />
                                 <input type="email" placeholder="Nuevo email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)}/>
                                 <br /><br />
-                                <input type="password" placeholder="Nueva contraseña" value={newPassword} onChange={(e) => setNewPassword(e.target.value)}/>
+                                <input type="password" minLength={"8"} maxLength={"15"} placeholder="Nueva contraseña" value={newPassword} onChange={(e) => setNewPassword(e.target.value)}/>
                                 <br /><br />
                                 <p>Coloque la contraseña antigua para confirmar los cambios</p>
                                 {<input type="password" placeholder="Contraseña antigua" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)}/> }

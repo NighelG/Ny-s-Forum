@@ -1,12 +1,12 @@
-import React from 'react'
-import { Await, Link, useNavigate } from 'react-router-dom'
-import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar'
-import UserServices from '../../services/UserServices'
+import React, { useState } from 'react'
 import SideBar from '../../pages/SideBar/SideBar'
 import '../Lobby/LobbyPage.css'
+import DiscussionPage from '../../pages/Discussion/DiscussionPage'
 
 
 function LobbyPage() {
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+
   return (
     <div>
         <h1>Ny's Forum</h1>
@@ -24,7 +24,7 @@ function LobbyPage() {
         </div>
         <div>
             <h2>Iniciar nueva discusion</h2>
-            <button><img src="/img/discu.png" alt="" /></button>
+            <button onClick={() => setIsDrawerOpen(true)}> <img src="/img/discu.png" alt="" /></button>
         </div>
         <br />
         <p>Discusiónes</p>
@@ -32,6 +32,8 @@ function LobbyPage() {
         <div>
             
         </div>
+
+        <DiscussionPage isOpen={isDrawerOpen} setIsOpen={setIsDrawerOpen} />
     </div>
   )
 }
