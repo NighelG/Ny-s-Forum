@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Await, Link, useNavigate } from 'react-router-dom'
 import UserServices from '../../services/UserServices'
+import './RegisterPage.css'
 
 function RegisterPage() {
   /* Const Principales*/
@@ -35,7 +36,7 @@ function RegisterPage() {
     }
   }
   return (
-    <div>
+    <div className='registerBody'>
       <h1>Ny's Forum</h1> 
       <br />
       <h2>Registro</h2>
@@ -61,7 +62,7 @@ function RegisterPage() {
         <input type="password" placeholder='Confirmar Contraseña' value={confirmarPassword} onChange={(e) => setConfirmarPassword(e.target.value)} />
       </label>
       <br /><br />
-      <button onClick={handleRegistro}>Registrarse</button>
+      <button className='button' onClick={handleRegistro}>Registrarse</button>
 
       {errorMsg && <h2>{errorMsg}</h2>}
 

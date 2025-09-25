@@ -8,7 +8,7 @@ function LobbyPage() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   return (
-    <div>
+    <div className='lobbybody'>
         <h1>Ny's Forum</h1>
             <br /><br />
             <SideBar />
@@ -23,8 +23,8 @@ function LobbyPage() {
             </label>
         </div>
         <div>
-            <h2>Iniciar nueva discusion</h2>
-            <button onClick={() => setIsDrawerOpen(true)}> <img src="/img/discu.png" alt="" /></button>
+            <h2>Iniciar nueva discusión</h2>
+            <button className='button' onClick={() => setIsDrawerOpen(true)}> <img className='tinymedium' src="/img/discu.png" alt="" /></button>
         </div>
         <br />
         <p>Discusiónes</p>

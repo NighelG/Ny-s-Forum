@@ -39,11 +39,11 @@ function LoginPage() {
     }
   };
   return (
-    <div>
+    <div className='loginBody'>
         <h1>Ny's Forum</h1> 
         <p>Si no tienes una cuenta
           <Link to={"/RegisterPage"}>
-            <button>Registrate</button>
+            <h3>Registrate</h3>
           </Link>
         </p>
         <br /><br />
@@ -57,7 +57,7 @@ function LoginPage() {
           <br /><br />
         </div>
 
-        <button onClick={handleLogin}>Logearse</button>
+        <button className='button' onClick={handleLogin}>Logearse</button>
         {errorMsg && <h2>{errorMsg}</h2>}
     </div>
   )

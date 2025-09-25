@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Await, Link, useNavigate } from 'react-router-dom'
-import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar"
+
 import './SideBar.css'
 
 import UserServices from '../../services/UserServices'
@@ -10,6 +10,7 @@ function SideBar() {
     /* Const de la sidebar */
     const [isOpen, setIsOpen] = useState(true)
     const [userData, setUserData] = useState(null)
+    const [activeMenu, setActiveMenu] = useState(null)
     /* Const de personalizacion */
     const [pfp, setPfp] = useState('')
     const [descripcion, setDescripcion] = useState('')
@@ -42,6 +43,11 @@ function SideBar() {
     /* Patch de datos del usuario */
     async function updateData() {
         const update ={}
+        if (oldPassword !== userData.password){
+            /* Este log es un placeholder, sigue aqui es que se me olvido sacarlo */
+            console.log("contraseña no valida");
+            return
+        }
         if (newName) update.userName=newName
         if (newEmail) update.email=newEmail
         if (newPassword) update.password=newPassword
@@ -56,59 +62,60 @@ function SideBar() {
             localStorage.removeItem('logueado')
             navigate('/')
         }
+
+    const toggleMenu = (menu) => {
+    setActiveMenu(activeMenu === menu ? null : menu)
+  }
     
   return (
     <div>
         <div className={`sidebar-container ${isOpen ? "open" : ""}`}>
-            <Sidebar className="sidebar">
-                <Menu>
-                    <SubMenu label="Usuario">
+            <div className="sidebar">
+                <div className="sidebar-submenu">
+                    <div className="sidebar-submenu-label" onClick={() => toggleMenu("usuario")}>
+                        Usuario
+                    </div>
+                    <div className={`sidebar-submenu-content ${activeMenu === "usuario" ? "open" : ""}`}>
                         {userData ? (
-                            <div className="usuarioInfo">
-                                <img className="pfp" src={userData.profileIcon || "/img/defaultPFP.jpg"} alt="pfp" />
-                                <p className="username">{userData.userName}</p>
-                                <p className="id">id: #{userData.id}</p>
-                                <p className="description">{userData.description || "Sin descripcion"}</p>
-                                <p className="email">correo:{userData.email}</p>
-                            </div>
-                        ):(
-                            <p>Eu, no deberias de estar aqui sin haberte logueado</p>
-                        )}
-                        <button onClick={logOut}>Cerrar sesion</button>
-                        <br /><br />
-                    </SubMenu>
-                    <SubMenu label="Personalización">
-                        <div>
-                            <h4>Cambiar foto de perfil</h4>
-                            <label >
-                                <input className="cambiarPfp" type="url" placeholder="Añade una url valida" value={pfp} onChange={(e) => setPfp(e.target.value)}/>
-                                <br />
-                                <h4>Descripcion</h4>
-                                <input type="text" placeholder="Agrega una descripcion" value={descripcion} onChange={(e) => setDescripcion(e.target.value)}/>
-                                <br /><br />
-                                <button onClick={updateUser}><img className="tinyIcon" src="/img/penciledit.png" alt="" /></button>
-                            </label>
-                            <br /><br />
+                        <div className="sidebar-usuarioInfo">
+                            <img className="sidebar-pfp" src={userData.profileIcon || "/img/defaultPFP.jpg"} alt="pfp"/>
+                            <h2 className="sidebar-username">{userData.userName}</h2>
+                            <p className="sidebar-description">{userData.description || "Sin descripcion"}</p>
+                            <p className="sidebar-email">{userData.email}</p>
                         </div>
-                    </SubMenu>
-                    <SubMenu label="Ajustes de la cuenta">
-                            <div>
-                                <h4>Modificar datos del usuario</h4>
-                                <input type="text" minLength={"3"} maxLength={"20"} placeholder="Nuevo nombre de usuario" value={newName} onChange={(e) => setNewName(e.target.value)} />
-                                <br /><br />
-                                <input type="email" placeholder="Nuevo email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)}/>
-                                <br /><br />
-                                <input type="password" minLength={"8"} maxLength={"15"} placeholder="Nueva contraseña" value={newPassword} onChange={(e) => setNewPassword(e.target.value)}/>
-                                <br /><br />
-                                <p>Coloque la contraseña antigua para confirmar los cambios</p>
-                                {<input type="password" placeholder="Contraseña antigua" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)}/> }
-                                <br /><br />
-                                <button onClick={updateData}>Realizar cambios</button>
-                                <br /><br />
-                            </div>
-                    </SubMenu>
-                </Menu>
-            </Sidebar>
+                        ) : (
+                        <p>Eu, no deberías de estar aquí sin haberte logueado</p>
+                        )}
+                    </div>
+                </div>
+                <div className="sidebar-submenu">
+                    <div className="sidebar-submenu-label" onClick={() => toggleMenu("personalizacion")}>
+                        Personalización
+                    </div>
+                    <div className={`sidebar-submenu-content ${activeMenu === "personalizacion" ? "open" : ""}`}>
+                        <h4>Cambiar foto de perfil</h4>
+                        <input className="sidebar-input" type="url" placeholder="Añade una url válida" value={pfp} onChange={(e) => setPfp(e.target.value)} />
+                        <h4>Descripción</h4>
+                        <input className="sidebar-input" type="text" placeholder="Agrega una descripción" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
+                        <button className="sidebar-button" onClick={updateUser}> <img className="sidebar-tinyIcon" src="/img/penciledit.png" alt="" /> </button>
+                    </div>
+                </div>
+                <div className="sidebar-submenu">
+                    <div className="sidebar-submenu-label" onClick={() => toggleMenu("ajustes")}>
+                        Ajustes de la cuenta
+                    </div>
+                    <div className={`sidebar-submenu-content ${activeMenu === "ajustes" ? "open" : ""}`}>
+                        <h4>Modificar datos del usuario</h4>
+                        <input className="sidebar-input" type="text" minLength="3" maxLength="20" placeholder="Nuevo nombre de usuario" value={newName} onChange={(e) => setNewName(e.target.value)} />
+                        <input className="sidebar-input" type="email" placeholder="Nuevo email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />                           
+                        <input className="sidebar-input" type="password" minLength="8" maxLength="15" placeholder="Nueva contraseña" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+                        <p>Coloque la contraseña antigua para confirmar los cambios</p>
+                        <input className="sidebar-input" type="password" placeholder="Contraseña antigua" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
+                        <button className="sidebar-button" onClick={updateData}>Realizar cambios</button>
+                    </div>
+                </div>
+                <button className="sidebar-logout" onClick={logOut}>Cerrar sesión</button>
+            </div>
         </div>
     </div>
   )
