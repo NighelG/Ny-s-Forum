@@ -1,5 +1,7 @@
 Esto esta aqui para ayudarme en un futuro a crear la sidebar que necesito para las opciones del usuario
 
+actualizacion, no me sirvio xdxdxdxdxdxd
+
 npm i react-pro-sidebar
 
 <Sidebar>
@@ -12,3 +14,21 @@ npm i react-pro-sidebar
     <MenuItem> Calendar </MenuItem>
   </Menu>
 </Sidebar>
+
+Esto lo tengo aqui para usarlo como referencia despues para renderizar las discuciones y sus comentarios
+        <div>
+          {tareasFiltradas.length === 0 ? (
+            <p className='sinResultados'>Sin resultados</p>
+          ) : (
+            tareasFiltradas.map((t, index) => (
+              <PatchDelete
+                key={index}
+                tarea={t}
+                onDelete={(id) => setEspacio(espacio.filter((x) => x.id !== id))}
+                onToggle={(actualizado) =>
+                  setEspacio(espacio.map((x) => (x.id === actualizado.id ? actualizado : x)))
+                }
+              />
+            ))
+          )}
+        </div>

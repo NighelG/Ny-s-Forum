@@ -3,13 +3,13 @@ import { Await, Link, useNavigate } from 'react-router-dom'
 import UserServices from '../../services/UserServices'
 import './LoginPage.css'
 
-
 function LoginPage() {
+  /* Const principales */
   const [user,setUser] = useState('')
   const [password,setPassword] = useState('')
   const [errorMsg,setErrorMsg] = useState('')
   const navigate = useNavigate()
-
+  /* Funcionalidad entera del login */
   const handleLogin = async() => {
     if (!user || !password){
       setErrorMsg("Por favor llena todos los espacios")
@@ -31,6 +31,8 @@ function LoginPage() {
         setUser('');
         setPassword('');
         navigate('/LobbyPage');
+        console.log("Bienvenido");
+        
       }else{
         setErrorMsg("Usuario o contraseña incorrectos")
         } 
@@ -41,13 +43,8 @@ function LoginPage() {
   return (
     <div className='loginBody'>
         <h1>Ny's Forum</h1> 
-        <p>Si no tienes una cuenta
-          <Link to={"/RegisterPage"}>
-            <h3>Registrate</h3>
-          </Link>
-        </p>
+        <p>Si no tienes una cuenta</p><Link to={"/RegisterPage"}><h3>Registrate</h3></Link>
         <br /><br />
-
         <h3>Iniciar Sesion</h3>
         <br />
         <div className='inputGroup'>
@@ -56,7 +53,6 @@ function LoginPage() {
             <input type="password" placeholder='Contraseña' value={password} onChange={(e) => setPassword(e.target.value)} />
           <br /><br />
         </div>
-
         <button className='button' onClick={handleLogin}>Logearse</button>
         {errorMsg && <h2>{errorMsg}</h2>}
     </div>

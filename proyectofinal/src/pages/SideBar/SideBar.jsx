@@ -20,6 +20,7 @@ function SideBar() {
     const [newPassword,setNewPassword] = useState('')
     const [oldPassword,setOldPassword] = useState('')
     
+    /* Esta funcion es para encontrar el usuario y obtener su informacion con localStorage y un get */
     useEffect(() => {
         const logged = JSON.parse(localStorage.getItem("logueado"))
         if (logged){
@@ -30,6 +31,13 @@ function SideBar() {
         }
     }, [])
     /* Patch de personalizacion */
+    const imgLocal = (e) => {
+        const file = e.target.files[0]
+        if (!file) return
+        const reader = new FileReader()
+        reader.onload = () => setPfp(reader.result)
+        reader.readAsDataURL(file)
+        };
     async function updateUser() {
         const actualizacion ={}
         if (pfp) actualizacion.profileIcon= pfp
@@ -38,7 +46,8 @@ function SideBar() {
             return
         }
         const uptadeUser = await UserServices.patchUser(userData.id, actualizacion)
-        window.location.reload();
+        window.location.reload()
+        console.log("Datos Actualizados")
     }
     /* Patch de datos del usuario */
     async function updateData() {
@@ -56,13 +65,16 @@ function SideBar() {
         }
         const uptadeData = await UserServices.patchUser(userData.id, update)
         window.location.reload()
+        console.log("Datos Actualizados");
+        
     }
     /* Boton de cerrar sesion */
         function logOut(){
             localStorage.removeItem('logueado')
             navigate('/')
+            console.log("Sesion cerrada");
         }
-
+    /* Esto es solo para la sidebar+ */
     const toggleMenu = (menu) => {
     setActiveMenu(activeMenu === menu ? null : menu)
   }
@@ -94,7 +106,10 @@ function SideBar() {
                     </div>
                     <div className={`sidebar-submenu-content ${activeMenu === "personalizacion" ? "open" : ""}`}>
                         <h4>Cambiar foto de perfil</h4>
+                        <p>Utiliza una url o subela localmente</p>
                         <input className="sidebar-input" type="url" placeholder="Añade una url válida" value={pfp} onChange={(e) => setPfp(e.target.value)} />
+                        <br /><br />
+                        <input className="sidebar-input" type="file" accept="image/*" onChange={imgLocal}  />
                         <h4>Descripción</h4>
                         <input className="sidebar-input" type="text" placeholder="Agrega una descripción" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
                         <button className="sidebar-button" onClick={updateUser}> <img className="sidebar-tinyIcon" src="/img/penciledit.png" alt="" /> </button>
