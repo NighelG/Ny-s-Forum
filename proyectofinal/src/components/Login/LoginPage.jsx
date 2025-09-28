@@ -42,7 +42,7 @@ function LoginPage() {
   };
   return (
     <div className='loginBody'>
-        <h1>Ny's Forum</h1> 
+        <img className='icono' src="/img/NysIcon.png" alt="Ny's Forum" />
         <p>Si no tienes una cuenta</p><Link to={"/RegisterPage"}><h3>Registrate</h3></Link>
         <br /><br />
         <h3>Iniciar Sesion</h3>

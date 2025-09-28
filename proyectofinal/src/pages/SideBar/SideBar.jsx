@@ -111,7 +111,8 @@ function SideBar() {
                         <br /><br />
                         <input className="sidebar-input" type="file" accept="image/*" onChange={imgLocal}  />
                         <h4>Descripción</h4>
-                        <input className="sidebar-input" type="text" placeholder="Agrega una descripción" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
+                        <textarea className="textarea" type="text" placeholder="Agrega una descripción" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
+                            <br /><br />
                         <button className="sidebar-button" onClick={updateUser}> <img className="sidebar-tinyIcon" src="/img/penciledit.png" alt="" /> </button>
                     </div>
                 </div>

@@ -4,11 +4,12 @@ import '../Lobby/LobbyPage.css'
 import DiscussionPage from '../../pages/Discussion/DiscussionPage'
 import PostServices from '../../services/PostServices'
 import UserServices from '../../services/UserServices'
-
+import { Navigate, useNavigate } from 'react-router-dom'
 
 function LobbyPage() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
     const [post, setPost] = useState ([])
+    const navigate = useNavigate()
 
     useEffect(() => {
         const traerPost = async () => {
@@ -28,20 +29,23 @@ function LobbyPage() {
         }
         traerPost()
     },[])
+    const postClick = (id) => {
+        navigate(`/CommentPage/${id}`)
+    }
   return (
     <div className='lobbybody'>
-        <h1>Ny's Forum</h1>
+        <img className='iconoEsquina' src="/img/NysIcon.png" alt="Ny's Forum" />
             <br /><br />
             <SideBar />
         <div>
             <label >
                 <input type="search" placeholder='Buscar' />
+            </label>
                 <select>
                     <option value="todas">Todas</option>
                     <option value="nuevo">Mas reciente</option>
                     <option value="viejo">Menos reciente</option>
                 </select>
-            </label>
         </div>
         <div>
             <h2>Iniciar nueva discusión</h2>
@@ -55,7 +59,7 @@ function LobbyPage() {
                 <p>Sin resultados</p>
             ) : (
                 post.map((post) =>(
-                    <div key={post.id} className='discussion-card'>
+                    <div key={post.id} className='discussion-card' onClick={() => postClick(post.id)}>
                         <div className='user-info'>
                             <img className='profile-icon' src={post.profileIcon || "/img/defaultPFP.jpg"}  alt="pfp" />
                             <div className='user-details'>
@@ -71,7 +75,6 @@ function LobbyPage() {
                 ))
             )}
         </div>
-
         <DiscussionPage isOpen={isDrawerOpen} setIsOpen={setIsDrawerOpen} />
     </div>
   )

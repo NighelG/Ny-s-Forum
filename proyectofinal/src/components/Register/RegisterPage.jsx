@@ -42,7 +42,7 @@ function RegisterPage() {
   }
   return (
     <div className='registerBody'>
-      <h1>Ny's Forum</h1> 
+      <img className='icono' src="/img/NysIcon.png" alt="Ny's Forum" />
       <br />
       <h2>Registro</h2>
       <p>Completa los siguientes espacios</p>
