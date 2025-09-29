@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import CommentsServices from '../../services/CommentServices'
+import { Navigate, useNavigate } from 'react-router-dom'
 import PostServices from '../../services/PostServices'
 import UserServices from '../../services/UserServices'
+import CommentMenu from '../../pages/Comments/CommentMenu'
 import { useParams } from 'react-router-dom'
 import '../CommentPage/CommentPage.css'
 import SideBar from '../../pages/SideBar/SideBar'
@@ -9,6 +10,7 @@ import SideBar from '../../pages/SideBar/SideBar'
 function CommentPage() {
     const { id } = useParams()
     const [post, setPost] = useState(null)
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
     useEffect(() => {
         const traerPost = async () => {
@@ -34,10 +36,10 @@ function CommentPage() {
     if (!post) return <p>Cargando...</p>
 
     const renderLink = () => {
-        if (!post.media) return <></>
+        if (!post.media) {return null}
         const mediaArray= Array.isArray(post.media) ? post.media : [post.media]
         return mediaArray.map((link, index) =>{
-            if (link.match(/\.(jpeg|jpg|png|gif|webp)$/i)){
+            if (link.match(/\.(jpeg|jpg|avif|png|gif|webp)$/i)){
                 return <img key={index} src={link} alt="link" className='post-media'/>
             }
             if (link.match(/\.(mp4|webm|ogg)$/i)){
@@ -90,8 +92,11 @@ function CommentPage() {
                 <p className="Nys-text">{post.discussion}</p>
                 <div className="Nys-media">{renderLink()}</div>
             </div>
+            <button className='button' onClick={() => setIsDrawerOpen(true)}>Responder</button>
         </div>
+        <CommentMenu isOpen={isDrawerOpen} setIsOpen={setIsDrawerOpen}/>
         <h3>Respuestas</h3>
+    
     </div>
   )
 }

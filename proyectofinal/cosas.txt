@@ -32,3 +32,21 @@ Esto lo tengo aqui para usarlo como referencia despues para renderizar las discu
             ))
           )}
         </div>
+
+        <div className="Nys-card">
+            <div className="Nys-header">
+                <img className="Nys-avatar" src={comment.profileIcon} alt="pfp" />
+                <div className="Nys-user-info">
+                <span className="Nys-username">{comment.userName}</span>
+                <span className="Nys-date">
+                    {new Date(comment.dateTime).toLocaleString()}
+                </span>
+                </div>
+            </div>
+            <div className="Nys-content">
+                <h4 className="Nys-title">{comment.title}</h4>
+                <p className="Nys-text">{comment.discussion}</p>
+                <div className="Nys-media">{renderLink()}</div>
+            </div>
+            <button className='button' onClick={() => setIsDrawerOpen(true)}>Responder</button>
+        </div>

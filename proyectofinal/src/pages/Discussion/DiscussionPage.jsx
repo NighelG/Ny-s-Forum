@@ -30,7 +30,8 @@ function DiscussionPage({ isOpen, setIsOpen }) {
       media: mediaLista,
       dateTime: new Date().toISOString(),
       userId: usuarioLog.identificacion,
-      userName: usuarioLog.usuario
+      userName: usuarioLog.usuario,
+      likes: 0
     }
     try{
       await PostServices.postPost(newPost)

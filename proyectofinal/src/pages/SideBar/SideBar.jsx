@@ -77,7 +77,14 @@ function SideBar() {
     /* Esto es solo para la sidebar+ */
     const toggleMenu = (menu) => {
     setActiveMenu(activeMenu === menu ? null : menu)
-  }
+    }
+    /* Ya por fin me acorde de esto */
+    useEffect(() => {
+    if (userData) {
+        setNewName(userData.userName);
+        setNewEmail(userData.email);
+    }
+    }, [userData])
     
   return (
     <div>

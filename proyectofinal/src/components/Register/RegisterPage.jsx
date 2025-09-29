@@ -11,7 +11,13 @@ function RegisterPage() {
   const [confirmarPassword,setConfirmarPassword] = useState('')
   const [errorMsg,setErrorMsg] = useState('')
   const navigate = useNavigate()
-
+  /* Estos const son para verificar la logintud de los inputs */
+    const validarUsuario = () => {
+      return user.length >= 3
+  }
+    const validarPassword = () => {
+      return password.length >= 8
+    }
   /* Esto es solo para subir los datos al db.json */
   const handleRegistro = async()=>{
     if (!user || !email || !password || !confirmarPassword) {
@@ -20,6 +26,14 @@ function RegisterPage() {
     }
     if (password !== confirmarPassword){
       setErrorMsg("Las contraseñas no son iguales")
+      return
+    }
+    if (!validarUsuario()) {
+      setErrorMsg("El nombre de usuario debe tener al menos 3 caracteres")
+      return
+    }
+    if (!validarPassword()) {
+      setErrorMsg("La contraseña debe tener al menos 8 caracteres")
       return
     }
     const newUser = {
