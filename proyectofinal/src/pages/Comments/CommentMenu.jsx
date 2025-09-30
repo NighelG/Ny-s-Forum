@@ -1,4 +1,4 @@
-
+import { useParams } from 'react-router-dom'
 import React, { useState } from 'react'
 import { Await, Link, useNavigate } from 'react-router-dom'
 import CommentServices from '../../services/CommentServices'
@@ -8,6 +8,7 @@ function CommentMenu({ isOpen, setIsOpen }) {
     const [response,setresponse] = useState('')
     const [media,setMedia] = useState('')
     const [errorMsg,setErrorMsg] = useState('')
+    const { id } = useParams()
   
     const nuevaRespuesta = async () => {
       if (!response){
@@ -25,6 +26,7 @@ function CommentMenu({ isOpen, setIsOpen }) {
         .filter ((url) => url.length > 0)
   
       const newComment = {
+        postId: id,
         response,
         media: mediaLista,
         dateTime: new Date().toISOString(),

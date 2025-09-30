@@ -1,7 +1,9 @@
+/* Este const esta ya que no logre que funcionara con los services que siempre hemos utilizado */
+const BASE_URL = "http://localhost:3001/comments"
 /* GET */
 async function getComments() {
     try {
-        const response = await fetch('http://localhost:3001/comments'+id, {
+        const response = await fetch(BASE_URL, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         });
@@ -15,7 +17,7 @@ async function getComments() {
 /* POST */
 async function postComment(commentObj) {
     try {
-        const response = await fetch('http://localhost:3001/comments'+id, {
+        const response = await fetch(BASE_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(commentObj)
@@ -30,7 +32,7 @@ async function postComment(commentObj) {
 /* PATCH */
 async function patchComment(id, data) {
     try {
-        const response = await fetch('http://localhost:3001/comments'+id, {
+        const response = await fetch(`${BASE_URL}/${id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
@@ -45,7 +47,7 @@ async function patchComment(id, data) {
 /* DELETE */
 async function deleteComment(id) {
     try {
-        const response = await fetch('http://localhost:3001/comments'+id, {
+        const response = await fetch(`${BASE_URL}/${id}`, {
             method: 'DELETE'
         });
         return await response.json();
