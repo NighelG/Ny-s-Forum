@@ -9,6 +9,8 @@ import { Navigate, useNavigate } from 'react-router-dom'
 function LobbyPage() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
     const [post, setPost] = useState ([])
+    const [searchName, setSearchName] = useState('')
+    const [sortOrder, setSortOrder] = useState('todas') 
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -32,6 +34,16 @@ function LobbyPage() {
     const postClick = (id) => {
         navigate(`/CommentPage/${id}`)
     }
+    const filteredPosts = post
+    .filter(p => p.title.toLowerCase().includes(searchName.toLowerCase()))
+    .sort((a, b) => {
+        if (sortOrder === 'nuevo') {
+            return new Date(b.dateTime) - new Date(a.dateTime)
+        } else if (sortOrder === 'viejo') {
+            return new Date(a.dateTime) - new Date(b.dateTime)
+        }
+        return 0
+    })
   return (
     <div className='lobbybody'>
         <img className='iconoEsquina' src="/img/NysIcon.png" alt="Ny's Forum" />
@@ -39,9 +51,9 @@ function LobbyPage() {
             <SideBar />
         <div>
             <label >
-                <input type="search" placeholder='Buscar' />
+                <input type="search" placeholder='Buscar' value={searchName} onChange={(e) => setSearchName(e.target.value)}  />
             </label>
-                <select>
+                <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
                     <option value="todas">Todas</option>
                     <option value="nuevo">Mas reciente</option>
                     <option value="viejo">Menos reciente</option>
@@ -54,14 +66,15 @@ function LobbyPage() {
         <br />
         <p>Discusiónes</p>
             <br />
+
         <div className='posts-container'>
-            {post.length === 0 ?(
+            {filteredPosts.length === 0 ?(
                 <p>Sin resultados</p>
             ) : (
-                post.map((post) =>(
+                filteredPosts.map((post) =>(
                     <div key={post.id} className='discussion-card' onClick={() => postClick(post.id)}>
                         <div className='user-info'>
-                            <img className='profile-icon' src={post.profileIcon || "/img/defaultPFP.jpg"}  alt="pfp" />
+                            <img  className='profile-icon' src={post.profileIcon || "/img/defaultPFP.jpg"}   alt="pfp" />
                             <div className='user-details'>
                                 <span className='user-name'>{post.userName}</span>
                                 <span>{new Date(post.dateTime).toLocaleString()}</span>
@@ -71,13 +84,12 @@ function LobbyPage() {
                             <h3 className="discussion-title">{post.title}</h3>
                         </div>
                     </div>
-
                 ))
             )}
         </div>
         <DiscussionPage isOpen={isDrawerOpen} setIsOpen={setIsDrawerOpen} />
     </div>
-  )
+)
 }
 
 export default LobbyPage
