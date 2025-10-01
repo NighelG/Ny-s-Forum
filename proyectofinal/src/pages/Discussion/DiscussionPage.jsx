@@ -4,11 +4,12 @@ import PostServices from '../../services/PostServices'
 import './DiscussionPage.css'
 
 function DiscussionPage({ isOpen, setIsOpen }) {
+  /* Const Pfrincipales */
   const [title,setTitle] = useState('')
   const [discussion,setDiscussion] = useState('')
   const [media,setMedia] = useState('')
   const [errorMsg,setErrorMsg] = useState('')
-
+  /* Esto genera la nuava discusion */
   const nuevaDiscusion = async () => {
     if (!title || !discussion){
       setErrorMsg("Llena todos los espacios")
@@ -23,7 +24,6 @@ function DiscussionPage({ isOpen, setIsOpen }) {
       .split(',')
       .map((url) => url.trim())
       .filter ((url) => url.length > 0)
-
     const newPost = {
       title,
       discussion,
@@ -46,7 +46,6 @@ function DiscussionPage({ isOpen, setIsOpen }) {
       setErrorMsg('Error al publicar')
     }
   }
-
   return (
     <div>
     {isOpen && <div className="overlay" onClick={() => setIsOpen(false)} />}
@@ -68,5 +67,4 @@ function DiscussionPage({ isOpen, setIsOpen }) {
     </div>
   )
 }
-
 export default DiscussionPage

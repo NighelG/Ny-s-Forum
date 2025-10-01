@@ -7,12 +7,13 @@ import UserServices from '../../services/UserServices'
 import { Navigate, useNavigate } from 'react-router-dom'
 
 function LobbyPage() {
+    /* Const principales */
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
     const [post, setPost] = useState ([])
     const [searchName, setSearchName] = useState('')
     const [sortOrder, setSortOrder] = useState('todas') 
     const navigate = useNavigate()
-
+    /* Esto es para el renderizado de los post */
     useEffect(() => {
         const traerPost = async () => {
             try{
@@ -34,6 +35,7 @@ function LobbyPage() {
     const postClick = (id) => {
         navigate(`/CommentPage/${id}`)
     }
+    /* Esto es para el filtro */
     const filteredPosts = post
     .filter(p => p.title.toLowerCase().includes(searchName.toLowerCase()))
     .sort((a, b) => {
@@ -51,10 +53,10 @@ function LobbyPage() {
             <SideBar />
         <div>
             <label >
-                <input type="search" placeholder='Buscar' value={searchName} onChange={(e) => setSearchName(e.target.value)}  />
+                <input className="search" type="search" placeholder='Buscar' value={searchName} onChange={(e) => setSearchName(e.target.value)}  />
             </label>
                 <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
-                    <option value="todas">Todas</option>
+                    <option value="todas">---</option>
                     <option value="nuevo">Mas reciente</option>
                     <option value="viejo">Menos reciente</option>
                 </select>
@@ -66,7 +68,6 @@ function LobbyPage() {
         <br />
         <p>Discusiónes</p>
             <br />
-
         <div className='posts-container'>
             {filteredPosts.length === 0 ?(
                 <p>Sin resultados</p>
@@ -91,5 +92,4 @@ function LobbyPage() {
     </div>
 )
 }
-
 export default LobbyPage

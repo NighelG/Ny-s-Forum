@@ -32,7 +32,6 @@ function LoginPage() {
         setPassword('');
         navigate('/LobbyPage');
         console.log("Bienvenido");
-        
       }else{
         setErrorMsg("Usuario o contraseña incorrectos")
         } 
@@ -54,6 +53,7 @@ function LoginPage() {
           <br /><br />
         </div>
         <button className='button' onClick={handleLogin}>Logearse</button>
+        <Link to={"/LobbyPage"}><button className='button'>Invitado</button></Link>
         {errorMsg && <h2>{errorMsg}</h2>}
     </div>
   )

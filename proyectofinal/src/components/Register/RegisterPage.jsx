@@ -78,9 +78,7 @@ function RegisterPage() {
       </label>
       <br /><br />
       <button className='button' onClick={handleRegistro}>Registrarse</button>
-
       {errorMsg && <h2>{errorMsg}</h2>}
-
     </div>
   )
 }

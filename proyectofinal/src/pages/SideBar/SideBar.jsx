@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Await, Link, useNavigate } from 'react-router-dom'
-
 import './SideBar.css'
-
 import UserServices from '../../services/UserServices'
 
 function SideBar() {
@@ -19,7 +17,6 @@ function SideBar() {
     const [newEmail,setNewEmail] = useState('')
     const [newPassword,setNewPassword] = useState('')
     const [oldPassword,setOldPassword] = useState('')
-    
     /* Esta funcion es para encontrar el usuario y obtener su informacion con localStorage y un get */
     useEffect(() => {
         const logged = JSON.parse(localStorage.getItem("logueado"))
@@ -65,27 +62,26 @@ function SideBar() {
         }
         const uptadeData = await UserServices.patchUser(userData.id, update)
         window.location.reload()
-        console.log("Datos Actualizados");
-        
+        console.log("Datos Actualizados")
     }
     /* Boton de cerrar sesion */
         function logOut(){
             localStorage.removeItem('logueado')
             navigate('/')
-            console.log("Sesion cerrada");
+            console.log("Sesion cerrada")
         }
     /* Esto es solo para la sidebar+ */
     const toggleMenu = (menu) => {
     setActiveMenu(activeMenu === menu ? null : menu)
     }
-    /* Ya por fin me acorde de esto */
+    /* Esto prerenderiza ciertos datos */
     useEffect(() => {
     if (userData) {
-        setNewName(userData.userName);
-        setNewEmail(userData.email);
+        setNewName(userData.userName)
+        setNewEmail(userData.email)
+        setDescripcion(userData.description)
     }
     }, [userData])
-    
   return (
     <div>
         <div className={`sidebar-container ${isOpen ? "open" : ""}`}>
@@ -130,10 +126,10 @@ function SideBar() {
                     <div className={`sidebar-submenu-content ${activeMenu === "ajustes" ? "open" : ""}`}>
                         <h4>Modificar datos del usuario</h4>
                         <input className="sidebar-input" type="text" minLength="3" maxLength="20" placeholder="Nuevo nombre de usuario" value={newName} onChange={(e) => setNewName(e.target.value)} />
-                        <input className="sidebar-input" type="email" placeholder="Nuevo email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />                           
-                        <input className="sidebar-input" type="password" minLength="8" maxLength="15" placeholder="Nueva contraseña" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+                        <input className="sidebar-input" type="email" placeholder="Nuevo email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} /> 
                         <p>Coloque la contraseña antigua para confirmar los cambios</p>
-                        <input className="sidebar-input" type="password" placeholder="Contraseña antigua" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
+                        <input className="sidebar-input" type="password" placeholder="Contraseña antigua" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />                     
+                        <input className="sidebar-input" type="password" minLength="8" maxLength="15" placeholder="Nueva contraseña" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
                         <button className="sidebar-button" onClick={updateData}>Realizar cambios</button>
                     </div>
                 </div>

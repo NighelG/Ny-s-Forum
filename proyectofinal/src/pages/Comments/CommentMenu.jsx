@@ -3,6 +3,7 @@ import CommentServices from '../../services/CommentServices'
 import '../Discussion/DiscussionPage.css'
 
 function CommentMenu({ isOpen, setIsOpen, postId, parentCommentId = null, onNewComment }) {
+  /* Const principales */
   const [response, setResponse] = useState('')
   const [media, setMedia] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
@@ -12,14 +13,14 @@ function CommentMenu({ isOpen, setIsOpen, postId, parentCommentId = null, onNewC
       setErrorMsg("No puedes publicar sin iniciar sesion")
       return
     }
-
+  /* Esto es para limpiar los inputs */
   const clearAndClose = () => {
     setResponse('')
     setMedia('')
     setErrorMsg('')
     setIsOpen(false)
   }
-
+  /* La misma variable dice para que es */
   const nuevaRespuesta = async () => {
     if (!response) {
       setErrorMsg("Llena todos los espacios")
@@ -29,12 +30,10 @@ function CommentMenu({ isOpen, setIsOpen, postId, parentCommentId = null, onNewC
       setErrorMsg("No puedes publicar sin iniciar sesión")
       return
     }
-    
     const mediaLista = media
       .split(',')
       .map(url => url.trim())
       .filter(url => url.length > 0)
-
     const newComment = {
       postId,
       response,
@@ -47,7 +46,7 @@ function CommentMenu({ isOpen, setIsOpen, postId, parentCommentId = null, onNewC
       replies: [],
       profileIcon: usuarioLog.profileIcon || "/img/defaultPFP.jpg"
     }
-
+    /* Esto es para identificar que se va a subir */
     try {
       if (parentCommentId) {
         const allComments = await CommentServices.getComments()
@@ -76,7 +75,6 @@ function CommentMenu({ isOpen, setIsOpen, postId, parentCommentId = null, onNewC
       setErrorMsg('Error al publicar')
     }
   }
-
   return (
     <div>
       {isOpen && <div className="overlay" onClick={() => setIsOpen(false)} />}
@@ -97,5 +95,4 @@ function CommentMenu({ isOpen, setIsOpen, postId, parentCommentId = null, onNewC
     </div>
   )
 }
-
 export default CommentMenu
