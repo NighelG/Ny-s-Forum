@@ -146,7 +146,7 @@ import { Await, Link, useNavigate } from 'react-router-dom'
             </div>
         </div>
         <div className="Nys-content">
-            <h4 className="Nys-title">{post.title}</h4>
+            <h2 className="Nys-title">{post.title}</h2>
             <p className="Nys-text">{post.discussion}</p>
             <div className="Nys-media">{renderMedia(post.media)}</div>
         </div>

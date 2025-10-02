@@ -10,7 +10,7 @@ function AdminPage() {
     const navigate = useNavigate()
     const usuarioLog = JSON.parse(localStorage.getItem('logueado'))
     const [users, setUsers] = useState([])
-
+    /* Esto es para verificar si eres admin: true */
     useEffect(() => {
         if (!usuarioLog?.admin) {
         navigate('/LobbyPage')
@@ -35,6 +35,7 @@ function AdminPage() {
         console.error('Error al actualizar admin', err)
         }
     }
+    /* Esto elimina, todo lo que posea la id de usuario */
     const banUser = async (userId) => {
         try {
         const posts = await PostServices.getPosts()

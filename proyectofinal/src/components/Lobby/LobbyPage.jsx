@@ -9,7 +9,6 @@ import { Navigate, useNavigate } from 'react-router-dom'
 
 function LobbyPage() {
     const usuarioLog = JSON.parse(localStorage.getItem('logueado'))
-    
     /* Const principales */
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
     const [post, setPost] = useState ([])

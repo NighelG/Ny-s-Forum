@@ -58,7 +58,6 @@ function SideBar() {
     async function updateData() {
         const update ={}
         if (oldPassword !== userData.password){
-            /* Este log es un placeholder, sigue aqui es que se me olvido sacarlo */
             setErrorMsg("contraseña antigua no valida");
             return
         }
@@ -110,7 +109,7 @@ function SideBar() {
                             <p className="sidebar-email">{userData.email}</p>
                         </div>
                         ) : (
-                        <p>Eu, no deberías de estar aquí sin haberte logueado</p>
+                        <p>Usuario no registrado, acciones limitadas</p>
                         )}
                     </div>
                 </div>
