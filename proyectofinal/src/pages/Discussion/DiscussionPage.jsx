@@ -16,9 +16,9 @@ function DiscussionPage({ isOpen, setIsOpen }) {
       return
     }
     const usuarioLog = JSON.parse(localStorage.getItem('logueado'))
-    if (!usuarioLog){
-      setErrorMsg("No puedes publicar sin iniciar sesion")
-      return
+    if (!usuarioLog || usuarioLog.identificacion === 'invitado') {
+        setErrorMsg("No puedes publicar sin iniciar sesión");
+        return;
     }
     const mediaLista = media
       .split(',')

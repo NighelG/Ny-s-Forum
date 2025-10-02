@@ -11,6 +11,15 @@ function RegisterPage() {
   const [confirmarPassword,setConfirmarPassword] = useState('')
   const [errorMsg,setErrorMsg] = useState('')
   const navigate = useNavigate()
+    /* Esto es para verificar que el correo sea valido */
+    function validarCorreo(correo) {
+    const dirrecPopular = /^[a-zA-Z0-9._%+-]+@(gmail\.com|googlemail\.com|hotmail\.com|outlook\.com|live\.com|yahoo\.com|yahoo\.es)$/i;
+    if (!dirrecPopular.test(correo)) {
+      console.log("Correo no válido, solo se aceptan dominios populares");
+      return false;
+    }
+    return true;
+  }
   /* Estos const son para verificar la logintud de los inputs */
     const validarUsuario = () => {
       return user.length >= 3
@@ -34,6 +43,10 @@ function RegisterPage() {
     }
     if (!validarPassword()) {
       setErrorMsg("La contraseña debe tener al menos 8 caracteres")
+      return
+    }
+    if (!validarCorreo(email)) {
+      setErrorMsg("Por favor ingresa un correo válido")
       return
     }
     const newUser = {

@@ -9,6 +9,18 @@ function LoginPage() {
   const [password,setPassword] = useState('')
   const [errorMsg,setErrorMsg] = useState('')
   const navigate = useNavigate()
+  /* Esto es para entrar como invitado */
+  const handleInvitado = () => {
+    localStorage.setItem(
+      "logueado",
+      JSON.stringify({
+        identificacion: "invitado",
+        usuario: "Invitado",
+        admin: false
+      })
+    );
+    navigate('/LobbyPage')
+}
   /* Funcionalidad entera del login */
   const handleLogin = async() => {
     if (!user || !password){
@@ -25,20 +37,21 @@ function LoginPage() {
           "logueado",
           JSON.stringify({
             identificacion: userFound.id,
-            usuario: userFound.userName
+            usuario: userFound.userName,
+            admin: userFound.admin
           })
         );
-        setUser('');
-        setPassword('');
-        navigate('/LobbyPage');
-        console.log("Bienvenido");
+        setUser('')
+        setPassword('')
+        navigate('/LobbyPage')
+        console.log("Bienvenido")
       }else{
         setErrorMsg("Usuario o contraseña incorrectos")
         } 
       } catch (error) {
         setErrorMsg("Error al iniciar sesión")
     }
-  };
+  }
   return (
     <div className='loginBody'>
         <img className='icono' src="/img/NysIcon.png" alt="Ny's Forum" />
@@ -53,7 +66,7 @@ function LoginPage() {
           <br /><br />
         </div>
         <button className='button' onClick={handleLogin}>Logearse</button>
-        <Link to={"/LobbyPage"}><button className='button'>Invitado</button></Link>
+        <button className='button' onClick={handleInvitado}>Invitado</button>
         {errorMsg && <h2>{errorMsg}</h2>}
     </div>
   )

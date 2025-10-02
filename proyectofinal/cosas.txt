@@ -1,134 +1,77 @@
-Esto esta aqui para ayudarme en un futuro a crear la sidebar que necesito para las opciones del usuario
+.discussion-card {
+  max-width: 600px;
+  margin: 20px 0 20px 40px;
+  background: #1e1e2f;
+  border: 1px solid #e6ecf0;
+  border-radius: 12px;
+  padding: 15px;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
 
-actualizacion, no me sirvio xdxdxdxdxdxd
+.discussion-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
 
-npm i react-pro-sidebar
+.discussion-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
 
-<Sidebar>
-  <Menu>
-    <SubMenu label="Charts">
-      <MenuItem> Pie charts </MenuItem>
-      <MenuItem> Line charts </MenuItem>
-    </SubMenu>
-    <MenuItem> Documentation </MenuItem>
-    <MenuItem> Calendar </MenuItem>
-  </Menu>
-</Sidebar>
+.discussion-user-info {
+  display: flex;
+  flex-direction: column;
+}
 
-Esto lo tengo aqui para usarlo como referencia despues para renderizar las discuciones y sus comentarios
-        <div>
-          {tareasFiltradas.length === 0 ? (
-            <p className='sinResultados'>Sin resultados</p>
-          ) : (
-            tareasFiltradas.map((t, index) => (
-              <PatchDelete
-                key={index}
-                tarea={t}
-                onDelete={(id) => setEspacio(espacio.filter((x) => x.id !== id))}
-                onToggle={(actualizado) =>
-                  setEspacio(espacio.map((x) => (x.id === actualizado.id ? actualizado : x)))
-                }
-              />
-            ))
-          )}
+.discussion-username {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.discussion-date {
+  font-size: 12px;
+  color: #657786;
+}
+
+.discussion-content {
+  margin-top: 10px;
+}
+
+.discussion-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.discussion-text {
+  font-size: 14px;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.discussion-media img,
+.discussion-media video {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+        <div className="discussion-card">
+        <div className="discussion-header">
+            <img className="discussion-avatar" src={post.profileIcon} alt="pfp" />
+            <div className="discussion-user-info">
+            <span className="discussion-username">{post.userName}</span>
+            <span className="discussion-date">{new Date(post.dateTime).toLocaleString()}</span>
+            </div>
         </div>
-
-        <div className="Nys-card">
-            <div className="Nys-header">
-                <img className="Nys-avatar" src={comment.profileIcon} alt="pfp" />
-                <div className="Nys-user-info">
-                <span className="Nys-username">{comment.userName}</span>
-                <span className="Nys-date">
-                    {new Date(comment.dateTime).toLocaleString()}
-                </span>
-                </div>
-            </div>
-            <div className="Nys-content">
-                <h4 className="Nys-title">{comment.title}</h4>
-                <p className="Nys-text">{comment.discussion}</p>
-                <div className="Nys-media">{renderLink()}</div>
-            </div>
-            <button className='button' onClick={() => setIsDrawerOpen(true)}>Responder</button>
+        <div className="discussion-content">
+            <h4 className="discussion-title">{post.title}</h4>
+            <p className="discussion-text">{post.discussion}</p>
+            <div className="discussion-media">{renderMedia(post.media)}</div>
         </div>
-
-        
-          <div className="Nys-card">
-            <div className="Nys-header">
-                <img className="Nys-avatar" src={comment.profileIcon} alt="pfp" />
-                <div className="Nys-user-info">
-                <span className="Nys-username">{comment.userName}</span>
-                <span className="Nys-date">
-                    {new Date(comment.dateTime).toLocaleString()}
-                </span>
-                </div>
-            </div>
-            <div className="Nys-content">
-                <h4 className="Nys-title">{comment.title}</h4>
-                <p className="Nys-text">{comment.response}</p>
-                <div className="Nys-media">{renderLink()}</div>
-            </div>
-            <button className='button' onClick={() => setIsDrawerOpen(true)}>Responder</button>
+        <button className='button' onClick={() => { setReplyTarget(null); setIsDrawerOpen(true) }}>Responder</button>
         </div>
-
-
-        
-    useEffect(() => {
-        const traecommentPost = async () => {
-            try{
-                const comment = await CommentServices.getcomments()
-                const users = await UserServices.getUsers()
-                const commentEncontrado = comment.find (p => String(p.id) === String(id))
-                
-                if (commentEncontrado) {
-                    const user = users.find(u => u.id === commentEncontrado.userId)
-                    setcomment({
-                        ...commentEncontrado,
-                        userName: user?.userName || 'Usuario desconocido',
-                        profileIcon: user?.profileIcon || "/img/defaultPFP.jpg"
-                    })
-                }
-            } catch (error){
-                console.error("Error al cargar la discusión", error);
-            }
-        }
-        traercomment()
-    }, [id])
-    if (!comment) return <p>Cargando...</p>
-
-    const renderLink = () => {
-        if (!comment.media) {return null}
-        const mediaArray= Array.isArray(comment.media) ? comment.media : [comment.media]
-        return mediaArray.map((link, index) =>{
-            if (link.match(/\.(jpeg|jpg|avif|png|gif|webp)$/i)){
-                return <img key={index} src={link} alt="link" className='comment-media'/>
-            }
-            if (link.match(/\.(mp4|webm|ogg)$/i)){
-                const ext = link.split('.').pop().toLowerCase()
-                return(
-                    <video key={index} controls className='post-media'>
-                        <source src={link} type={`video/${ext}`} />
-                        Archivo no soportado
-                    </video>
-                )
-            }
-            if(link.includes("youtube.com")|| link.includes("youtu.be")){
-                let videoId = ""
-                try {
-                if (link.includes("youtu.be")) {
-                    videoId = link.split("youtu.be/")[1].split("?")[0]
-                } else {
-                    const params = new URL(link).searchParams
-                    videoId = params.get("v")
-                }
-                } catch(e) {
-                console.warn("Error parsing YouTube link", link)
-                }
-                return (
-                    <iframe key={index} className="post-media" src={`https://www.youtube.com/embed/${videoId}`} title="YouTube video"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen sandbox="allow-scripts allow-same-origin allow-presentation"></iframe>
-                )
-            }
-            return null
-        })
-    }

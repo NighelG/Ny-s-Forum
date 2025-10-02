@@ -9,14 +9,14 @@ function SideBar() {
     const [isOpen, setIsOpen] = useState(true)
     const [userData, setUserData] = useState(null)
     const [activeMenu, setActiveMenu] = useState(null)
-    /* Const de personalizacion */
     const [pfp, setPfp] = useState('')
     const [descripcion, setDescripcion] = useState('')
-    /* Const de datos del usuario */
     const [newName,setNewName] = useState('')
     const [newEmail,setNewEmail] = useState('')
     const [newPassword,setNewPassword] = useState('')
     const [oldPassword,setOldPassword] = useState('')
+    const [errorMsg,setErrorMsg] = useState('')
+    const usuarioLog = JSON.parse(localStorage.getItem('logueado'))
     /* Esta funcion es para encontrar el usuario y obtener su informacion con localStorage y un get */
     useEffect(() => {
         const logged = JSON.parse(localStorage.getItem("logueado"))
@@ -27,6 +27,15 @@ function SideBar() {
             })
         }
     }, [])
+    /* Esto es para verificar que el correo sea valido */
+    function validarCorreo(correo) {
+        const dirrecPopular = /^[a-zA-Z0-9._%+-]+@(gmail\.com|googlemail\.com|hotmail\.com|outlook\.com|live\.com|yahoo\.com|yahoo\.es)$/i;
+        if (!dirrecPopular.test(correo)) {
+        console.log("Correo no válido");
+        return false;
+        }
+        return true;
+    }
     /* Patch de personalizacion */
     const imgLocal = (e) => {
         const file = e.target.files[0]
@@ -44,15 +53,18 @@ function SideBar() {
         }
         const uptadeUser = await UserServices.patchUser(userData.id, actualizacion)
         window.location.reload()
-        console.log("Datos Actualizados")
     }
     /* Patch de datos del usuario */
     async function updateData() {
         const update ={}
         if (oldPassword !== userData.password){
             /* Este log es un placeholder, sigue aqui es que se me olvido sacarlo */
-            console.log("contraseña no valida");
+            setErrorMsg("contraseña antigua no valida");
             return
+        }
+        if (!validarCorreo(newEmail)) {
+        setErrorMsg("Por favor ingresa un correo válido")
+        return
         }
         if (newName) update.userName=newName
         if (newEmail) update.email=newEmail
@@ -62,7 +74,6 @@ function SideBar() {
         }
         const uptadeData = await UserServices.patchUser(userData.id, update)
         window.location.reload()
-        console.log("Datos Actualizados")
     }
     /* Boton de cerrar sesion */
         function logOut(){
@@ -133,7 +144,11 @@ function SideBar() {
                         <button className="sidebar-button" onClick={updateData}>Realizar cambios</button>
                     </div>
                 </div>
+                {errorMsg && <h2>{errorMsg}</h2>}
                 <button className="sidebar-logout" onClick={logOut}>Cerrar sesión</button>
+                {usuarioLog?.admin && (
+                    <button className="button" onClick={() => navigate("/AdminPage")}>Panel Admin</button>
+                )}
             </div>
         </div>
     </div>

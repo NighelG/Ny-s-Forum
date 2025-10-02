@@ -26,9 +26,9 @@ function CommentMenu({ isOpen, setIsOpen, postId, parentCommentId = null, onNewC
       setErrorMsg("Llena todos los espacios")
       return
     }
-    if (!usuarioLog) {
-      setErrorMsg("No puedes publicar sin iniciar sesión")
-      return
+    if (!usuarioLog || usuarioLog.identificacion === 'invitado') {
+        setErrorMsg("No puedes publicar sin iniciar sesión");
+        return;
     }
     const mediaLista = media
       .split(',')

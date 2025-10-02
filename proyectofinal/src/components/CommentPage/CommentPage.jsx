@@ -131,9 +131,10 @@ import { Await, Link, useNavigate } from 'react-router-dom'
 }
   return (
     <div>
-    <img className='iconoEsquina' src="/img/NysIcon.png" alt="Ny's Forum" />
-    <br /><br />
-    <Link to={"/LobbyPage"}><button className='button'>Volver</button></Link>
+    <div className='cabeza'>
+        <img className='iconoEsquina' src="/img/NysIcon.png" alt="Ny's Forum" />
+        <Link to={"/LobbyPage"}><button className='button'>Volver</button></Link>
+    </div>
     
     {loadingPost ? <p>Cargando post...</p> : post ? (
         <div className="Nys-card">

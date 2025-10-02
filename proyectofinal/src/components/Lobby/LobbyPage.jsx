@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import SideBar from '../../pages/SideBar/SideBar'
+import AdminPanel from '../AdminPage/AdminPage'
 import '../Lobby/LobbyPage.css'
 import DiscussionPage from '../../pages/Discussion/DiscussionPage'
 import PostServices from '../../services/PostServices'
@@ -7,6 +8,8 @@ import UserServices from '../../services/UserServices'
 import { Navigate, useNavigate } from 'react-router-dom'
 
 function LobbyPage() {
+    const usuarioLog = JSON.parse(localStorage.getItem('logueado'))
+    
     /* Const principales */
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
     const [post, setPost] = useState ([])
